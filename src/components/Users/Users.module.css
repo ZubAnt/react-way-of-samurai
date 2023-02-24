@@ -1,0 +1,13 @@
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+}
+
+.page {
+
+}
+
+.pageSelected {
+      font-weight: bold;
+}

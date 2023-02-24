@@ -1,0 +1,6 @@
+.fieldError {
+    border: solid red 2px;
+}
+.fieldErrorText {
+    color: red
+}

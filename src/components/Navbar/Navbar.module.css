@@ -1,0 +1,13 @@
+.nav {
+    grid-area: n;
+    background-color: #61dafb;
+}
+
+.item {
+    color: red;
+    text-decoration: none;
+}
+
+.activeLink {
+    color: rebeccapurple;
+}
