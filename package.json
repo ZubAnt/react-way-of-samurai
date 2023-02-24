@@ -1,11 +1,12 @@
 {
-  "name": "react-kabzda-1",
+  "name": "react-way-of-samurai",
+  "homepage": "https://aszubarev.github.io/react-way-of-samurai",
   "jest": {
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
     },
     "transformIgnorePatterns": []
-},
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -35,7 +36,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -61,6 +64,7 @@
     "babel-jest": "^29.3.1",
     "esbuild": "^0.16.16",
     "esbuild-jest": "^0.5.0",
+    "gh-pages": "^5.0.0",
     "react-test-renderer": "^18.2.0"
   }
 }

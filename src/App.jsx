@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Route} from "react-router-dom";
+import {HashRouter, Route} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderComponent from "./components/Header/HeaderComponent";
 import Login from "./components/Login/Login";
@@ -33,7 +33,7 @@ class App extends React.Component {
         }
 
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <div className="app-wrapper">
                     <HeaderComponent/>
                     <Navbar/>
@@ -72,7 +72,7 @@ class App extends React.Component {
                         />
                     </div>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         )
     }
 }
