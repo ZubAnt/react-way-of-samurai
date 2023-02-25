@@ -14,7 +14,7 @@ class ProfileContainer extends React.Component {
         this.state = {redirectToLogin: false};
     }
 
-    componentDidMount() {
+    getProfile() {
         let userId = this.props.match.params.userId;
         if (!userId && this.props.me) {
             userId = this.props.me.id
@@ -25,6 +25,16 @@ class ProfileContainer extends React.Component {
         this.controller = new AbortController();
         this.props.showProfileById(userId, this.controller.signal)
         this.props.getStatus(userId, this.controller.signal)
+    }
+
+    componentDidMount() {
+       this.getProfile()
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.match.params.userId !== this.props.match.params.userId) {
+            this.getProfile()
+        }
     }
 
     componentWillUnmount() {

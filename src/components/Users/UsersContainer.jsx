@@ -68,5 +68,5 @@ export default compose(
             setCurrentPage,
             getUsers,
         }
-    )
+    ),
 )(UserContainer)

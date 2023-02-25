@@ -40,35 +40,19 @@ class App extends React.Component {
                     <div className="app-wrapper-content">
                         <Route
                             path='/profile/:userId?'
-                            render={
-                                (props) => {
-                                    return <ProfileContainer/>
-                                }
-                            }
+                            render={ProfileContainer}
                         />
                         <Route
                             path='/dialogs'
-                            render={
-                                (props) => {
-                                    return <DialogsContainer/>
-                                }
-                            }
+                            render={DialogsContainer}
                         />
                         <Route
                             path='/users'
-                            render={
-                                (props) => {
-                                    return <UsersContainer/>
-                                }
-                            }
+                            render={() => <UsersContainer/>}
                         />
                         <Route
                             path='/login'
-                            render={
-                                (props) => {
-                                    return <Login/>
-                                }
-                            }
+                            render={() => <Login/>}
                         />
                     </div>
                 </div>
