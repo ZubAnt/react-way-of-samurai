@@ -5,6 +5,7 @@ const ADD_POST = 'ADD-POST';
 const ACTION_TYPE_PROFILE_SET_PROFILE = 'ACTION_TYPE_PROFILE_SET_PROFILE';
 const ACTION_TYPE_PROFILE_SET_STATUS = 'ACTION_TYPE_PROFILE_SET_STATUS';
 const ACTION_TYPE_PROFILE_SAVE_PHOTO_SUCCESS = 'ACTION_TYPE_PROFILE_SAVE_PHOTO_SUCCESS';
+const ACTION_TYPE_PROFILE_SAVE_SUCCESS = 'ACTION_TYPE_PROFILE_SAVE_SUCCESS';
 
 let postCnt = 0;
 let posts = [
@@ -23,6 +24,8 @@ export const setProfile = (profile) => ({type: ACTION_TYPE_PROFILE_SET_PROFILE, 
 export const setStatus = (status) => ({type: ACTION_TYPE_PROFILE_SET_STATUS, status: status})
 
 export const savePhotoSuccess = (photos) => ({type: ACTION_TYPE_PROFILE_SAVE_PHOTO_SUCCESS, photos: photos})
+
+export const saveProfileSuccess = (data) => ({type: ACTION_TYPE_PROFILE_SAVE_SUCCESS, data: data})
 
 let initialState = {
     posts: posts,
@@ -52,6 +55,8 @@ const profileReducer = (state = initialState, action) => {
             return {...state, status: action.status}
         case ACTION_TYPE_PROFILE_SAVE_PHOTO_SUCCESS:
             return {...state, profile: {...state.profile, photos: action.photos}}
+        case ACTION_TYPE_PROFILE_SAVE_SUCCESS:
+            return {...state, profile: {...state.profile, ...action.data}}
     }
     return state
 }
@@ -102,6 +107,14 @@ export const savePhoto = (file) => async (dispatch) => {
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
     }
+}
+
+export const saveProfile = (userId, data) => async (dispatch) => {
+    const response_data = await sdk.profile.update(userId, data)
+    if (response_data.resultCode === 0) {
+        dispatch(saveProfileSuccess(data))
+    }
+    return response_data
 }
 
 export const addPost = (newPostText) => (dispatch) => {

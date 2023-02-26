@@ -47,6 +47,10 @@ const sdk = {
         getByUserId(userId, signal) {
             return instance.get(`/profile/${userId}`, {signal: signal}).then(response => response.data)
         },
+        update(userId, data) {
+            data.userId = userId
+            return instance.put(`/profile`, data).then(response => response.data)
+        },
         status: {
             getByUserId(userId, signal) {
                 return instance.get(
