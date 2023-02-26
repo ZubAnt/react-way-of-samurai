@@ -28,7 +28,7 @@ const ProfileInfo = (props) => {
                 <img src={props.profile.photos.large || avatar}/>
                 {isOwner ? <input type="file" onChange={onMainPhotoSelected}/> : ''}
 
-                {editMode
+                {editMode && isOwner
                     ? <ProfileDataForm
                         profile={props.profile}
                         setEditMode={setEditMode}
@@ -37,6 +37,7 @@ const ProfileInfo = (props) => {
                     : <ProfileData
                         profile={props.profile}
                         setEditMode={setEditMode}
+                        isOwner={isOwner}
                     />
                 }
 
@@ -50,7 +51,7 @@ const ProfileInfo = (props) => {
     )
 }
 
-const ProfileData = ({profile, setEditMode}) => {
+const ProfileData = ({profile, setEditMode, isOwner}) => {
     return (
         <div>
             <div>
@@ -76,7 +77,7 @@ const ProfileData = ({profile, setEditMode}) => {
                 })}
             </div>
 
-            <button onClick={() => setEditMode(true)}>Edit</button>
+            {isOwner? <button onClick={() => setEditMode(true)}>Edit</button>: <div/>}
 
         </div>
     )
@@ -90,9 +91,11 @@ const ProfileDataForm = ({profile, setEditMode, saveProfile}) => {
                 aboutMe: profile.aboutMe,
                 lookingForAJob: Boolean(profile.lookingForAJob),
                 lookingForAJobDescription: profile.lookingForAJobDescription,
+                contacts: {...profile.contacts}
             }}
             onSubmit={(values, {setSubmitting, resetForm, setErrors}) => {
-                saveProfile(profile.userId, {...values}).then((response_data) => {
+                let payload = {...values}
+                saveProfile(profile.userId, payload).then((response_data) => {
                     if (response_data.resultCode === 0) {
                         setSubmitting(false);
                         resetForm();
@@ -115,7 +118,7 @@ const ProfileDataForm = ({profile, setEditMode, saveProfile}) => {
               }) => {
 
                 return (
-                    <Form>
+                    <Form className={s.profileDataForm}>
                         <TextField
                             fullWidth
                             id="fullName"
@@ -154,6 +157,24 @@ const ProfileDataForm = ({profile, setEditMode, saveProfile}) => {
                             error={touched.lookingForAJobDescription && Boolean(errors.lookingForAJobDescription)}
                             helperText={touched.lookingForAJobDescription ? errors.lookingForAJobDescription : ''}
                         />
+
+                        <div>
+                            <b>Contacts:</b>
+                            {Object.keys(profile.contacts).map((key) => {
+                                return <TextField
+                                    fullWidth
+                                    id={"contacts." + key}
+                                    name={"contacts." + key}
+                                    key={"contacts." + key}
+                                    label={key}
+                                    value={profile.contacts[key]}
+                                    onChange={handleChange}
+                                    error={touched["contacts." + key] && Boolean(errors["contacts." + key])}
+                                    helperText={touched["contacts." + key] ? errors["contacts." + key] : ''}
+                                />
+                            })}
+                        </div>
+                        
                         <Button id="saveBtn" color="primary" variant="contained" fullWidth type="submit">
                             Save
                         </Button>
