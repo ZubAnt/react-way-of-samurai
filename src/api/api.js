@@ -24,17 +24,24 @@ const sdk = {
         return instance.delete(`/follow/${userId}`).then(response => response.data)
     },
 
+    security: {
+        get_captcha_url() {
+            return instance.get('/security/get-captcha-url').then(response => response.data)
+        }
+    },
+
     auth: {
         me(signal) {
             return instance.get('/auth/me', {signal: signal}).then(response => response.data)
         },
-        login(email, password, rememberMe, signal) {
+        login(email, password, rememberMe, captcha, signal) {
             return instance.post(
                 '/auth/login',
                 {
                     email: email,
                     password: password,
                     rememberMe: rememberMe,
+                    captcha: captcha,
                 },
                 {signal: signal}
             ).then(response => response.data)

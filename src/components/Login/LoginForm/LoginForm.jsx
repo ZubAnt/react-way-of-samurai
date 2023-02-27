@@ -1,6 +1,7 @@
 import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import {Button, Checkbox, TextField} from "@mui/material";
+import {useState} from "react";
 
 const LoginFormSchema = Yup.object().shape({
     email: Yup
@@ -14,14 +15,18 @@ const LoginFormSchema = Yup.object().shape({
 });
 
 const LoginForm = (props) => {
+
+    const [captchaUrl, setCaptchaUrl] = useState('')
+
     return (
         <Formik
-            initialValues={{email: '', password: '', rememberMe: true}}
+            initialValues={{email: '', password: '', rememberMe: true, captcha: undefined}}
             onSubmit={(values, {setSubmitting, resetForm, setErrors}) => {
                 props.login(
                     values.email,
                     values.password,
                     values.rememberMe,
+                    values.captcha,
                 ).then((data) => {
                     if (data.resultCode === 0) {
                         setSubmitting(false);
@@ -30,6 +35,12 @@ const LoginForm = (props) => {
                         console.log('handle error', data.messages)
                         setErrors({email: data.messages.length > 0 ? data.messages[0]: "Some error"})
                         setSubmitting(false);
+
+                        if (data.resultCode === 10) {
+                            props.get_captcha_url().then(
+                                (url) => {setCaptchaUrl(url)}
+                            )
+                        }
                     }
                 })
             }}
@@ -76,6 +87,28 @@ const LoginForm = (props) => {
                             checked={values.rememberMe}
                             onChange={handleChange}
                         />
+                        <div>
+                        {captchaUrl
+                            ? <img src={captchaUrl}/>
+                            : <div></div>
+                        }
+                        </div>
+                        {captchaUrl
+                            ? <TextField
+                                fullWidth
+                                id="captcha"
+                                name="captcha"
+                                label="captcha"
+                                type="captcha"
+                                value={values.captcha}
+                                onChange={handleChange}
+                                error={touched.captcha && Boolean(errors.captcha)}
+                                helperText={touched.captcha ? errors.captcha : ''}
+                            />
+                            : <div></div>
+                        }
+
+
                         <Button id="loginBtn" color="primary" variant="contained" fullWidth type="submit">
                             Login
                         </Button>

@@ -36,8 +36,8 @@ export const getMe = (signal) => async (dispatch) => {
     }
 }
 
-export const login = (email, password, rememberMe, signal) => async (dispatch) => {
-    const data = await sdk.auth.login(email, password, rememberMe, signal);
+export const login = (email, password, rememberMe, captcha, signal) => async (dispatch) => {
+    const data = await sdk.auth.login(email, password, rememberMe, captcha, signal);
     if (data.resultCode === 0) {
         dispatch(getMe())
     }
@@ -49,6 +49,11 @@ export const logout = () => async (dispatch) => {
     if (data.resultCode === 0) {
         dispatch(setMe(null))
     }
+}
+
+export const get_captcha_url = () => async (dispatch) => {
+    const data =  await sdk.security.get_captcha_url();
+    return data.url
 }
 
 export default authReducer
