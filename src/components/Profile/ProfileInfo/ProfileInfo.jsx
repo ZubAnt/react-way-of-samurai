@@ -160,6 +160,7 @@ const ProfileDataForm = ({profile, setEditMode, saveProfile}) => {
 
                         <div>
                             <b>Contacts:</b>
+
                             {Object.keys(profile.contacts).map((key) => {
                                 return <TextField
                                     fullWidth
@@ -167,7 +168,7 @@ const ProfileDataForm = ({profile, setEditMode, saveProfile}) => {
                                     name={"contacts." + key}
                                     key={"contacts." + key}
                                     label={key}
-                                    value={profile.contacts[key]}
+                                    value={values.contacts[key]}
                                     onChange={handleChange}
                                     error={touched["contacts." + key] && Boolean(errors["contacts." + key])}
                                     helperText={touched["contacts." + key] ? errors["contacts." + key] : ''}
