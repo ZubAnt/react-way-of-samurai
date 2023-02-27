@@ -25,7 +25,7 @@ const sdk = {
     },
 
     security: {
-        get_captcha_url() {
+        getCaptchaUrl() {
             return instance.get('/security/get-captcha-url').then(response => response.data)
         }
     },

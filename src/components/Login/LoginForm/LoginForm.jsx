@@ -37,7 +37,7 @@ const LoginForm = (props) => {
                         setSubmitting(false);
 
                         if (data.resultCode === 10) {
-                            props.get_captcha_url().then(
+                            props.getCaptchaUrl().then(
                                 (url) => {setCaptchaUrl(url)}
                             )
                         }

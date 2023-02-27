@@ -1,5 +1,5 @@
 import s from './Login.module.css'
-import {get_captcha_url, login} from "../../redux/auth-reducer";
+import {getCaptchaUrl, login} from "../../redux/auth-reducer";
 import {connect} from "react-redux";
 import LoginForm from "./LoginForm/LoginForm";
 import {Redirect} from "react-router-dom";
@@ -14,7 +14,7 @@ const Login = (props) => {
 
     return (
         <div className={s.loginBlock}>
-            <LoginForm login={props.login} get_captcha_url={props.get_captcha_url}/>
+            <LoginForm login={props.login} getCaptchaUrl={props.getCaptchaUrl}/>
         </div>
     )
 }
@@ -27,5 +27,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     login,
-    get_captcha_url,
+    getCaptchaUrl,
 })(Login)
