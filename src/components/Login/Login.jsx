@@ -14,18 +14,18 @@ const Login = (props) => {
 
     return (
         <div className={s.loginBlock}>
-            <LoginForm login={props.login} getCaptchaUrl={props.getCaptchaUrl}/>
+            <LoginForm login={props.login} captchaUrl={props.captchaUrl}/>
         </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        me: state.auth.me
+        me: state.auth.me,
+        captchaUrl: state.auth.captchaUrl,
     }
 }
 
 export default connect(mapStateToProps, {
     login,
-    getCaptchaUrl,
 })(Login)

@@ -16,8 +16,6 @@ const LoginFormSchema = Yup.object().shape({
 
 const LoginForm = (props) => {
 
-    const [captchaUrl, setCaptchaUrl] = useState('')
-
     return (
         <Formik
             initialValues={{email: '', password: '', rememberMe: true, captcha: undefined}}
@@ -35,12 +33,6 @@ const LoginForm = (props) => {
                         console.log('handle error', data.messages)
                         setErrors({email: data.messages.length > 0 ? data.messages[0]: "Some error"})
                         setSubmitting(false);
-
-                        if (data.resultCode === 10) {
-                            props.getCaptchaUrl().then(
-                                (url) => {setCaptchaUrl(url)}
-                            )
-                        }
                     }
                 })
             }}
@@ -88,12 +80,12 @@ const LoginForm = (props) => {
                             onChange={handleChange}
                         />
                         <div>
-                        {captchaUrl
-                            ? <img src={captchaUrl}/>
+                        {props.captchaUrl
+                            ? <img src={props.captchaUrl}/>
                             : <div></div>
                         }
                         </div>
-                        {captchaUrl
+                        {props.captchaUrl
                             ? <TextField
                                 fullWidth
                                 id="captcha"
